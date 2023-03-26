@@ -7,8 +7,12 @@ let stockData = {}
 
 async function performScraping(stock) {
   try {
-    const browser = await puppeteer.launch()
+    //in my localhost this works fine
+    //const browser = await puppeteer.launch()
+    //testing the following in production:
+    const browser = await puppetter.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
+
 
     await page.goto(`https://www.macrotrends.net/stocks/charts/${stock}/stockname/financial-statements`, { waitUntil: 'networkidle0' })
 
