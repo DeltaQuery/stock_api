@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>Stock Guide</title>
+  </head>
+  <body>
+    <h1>Stock Guide</h1>
+    <ul>
+      <% stockSymbols.forEach(function(symbol) { %>
+        <li><a href="/api/v1/stocks/<%= symbol %>"><%= symbol %></a></li>
+      <% }); %>
+    </ul>
+  </body>
+</html>
