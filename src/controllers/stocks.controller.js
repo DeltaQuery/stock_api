@@ -10,7 +10,7 @@ async function performScraping(stock) {
     //in my localhost this works fine
     //const browser = await puppeteer.launch()
     //testing the following in production:
-    const browser = await puppetter.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
 
 
