@@ -12,6 +12,8 @@ async function performScraping(stock) {
 
     await page.goto(`https://www.macrotrends.net/stocks/charts/${stock}/stockname/financial-statements`, { waitUntil: 'networkidle0' })
 
+    console.log($.html())
+
     const htmlContent = await page.content()
     const $ = cheerio.load(htmlContent)
     await browser.close()
