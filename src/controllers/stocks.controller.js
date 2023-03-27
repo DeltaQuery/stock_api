@@ -11,22 +11,27 @@ async function performScraping(stock) {
     //const browser = await puppeteer.launch()
     //testing the following in production:
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    if(browser) console.log("browser existe")
     const page = await browser.newPage()
-
+    if(page) console.log("page existe")
 
     await page.goto(`https://www.macrotrends.net/stocks/charts/${stock}/stockname/financial-statements`, { waitUntil: 'networkidle0' })
 
-    console.log($.html())
+    console.log("arranca función")
 
     const htmlContent = await page.content()
+    if(htmlContent) console.log("htmlContent existe")
     const $ = cheerio.load(htmlContent)
+    if($) console.log("$ existe")
     await browser.close()
 
     //financialStatementData
     const table = $('#jqxgrid')
+    if(table) console.log("table existe")
     const tableHeading = $('.main_content_container.container-fluid > div:nth-child(2) > h2:first-child').text() || undefined
 
     if (table.length > 0 && tableHeading) {
+      console.log("condicional activo")
           //years data
       let years = []
       if (table.length) {
@@ -70,6 +75,7 @@ async function performScraping(stock) {
         generateYearlyDataArr(table, id, $)
       })
     }
+
     return { stockData }
   } catch (e) {
     console.error(e)
