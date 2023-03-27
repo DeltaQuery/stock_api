@@ -7,22 +7,14 @@ let stockData = {}
 
 async function performScraping(stock) {
   try {
-    //in my localhost this works fine
-    //const browser = await puppeteer.launch()
-    //testing the following in production:
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
-    if(browser) console.log("browser existe")
     const page = await browser.newPage()
-    if(page) console.log("page existe")
-
+    
     await page.goto(`https://www.macrotrends.net/stocks/charts/${stock}/stockname/financial-statements`, { waitUntil: 'networkidle0' })
 
-    console.log("arranca función")
-
     const htmlContent = await page.content()
-    if(htmlContent) console.log("htmlContent existe")
     const $ = cheerio.load(htmlContent)
-    if($) console.log("$ existe")
+
     await browser.close()
 
     //financialStatementData
@@ -115,16 +107,14 @@ exports.getAllStocks = catchAsync(async (req, res, next) => {
 })
 
 exports.getStockData = catchAsync(async (req, res, next) => {
+  stockData = {}
   const stock = req.params.stock
 
-  const { stockData } = await performScraping(stock)
+  const { stockData: stockInfo } = await performScraping(stock)
 
-  if(Object.keys(stockData).length < 3) return next(new AppError('It was not possible to obtain stock data. Please contact the administrator.', 404))
+  if(Object.keys(stockInfo).length < 3) return next(new AppError('It was not possible to obtain stock data. Please contact the administrator.', 404))
 
   res.status(200).json({
-    message: stockData
+    message: stockInfo
   })
 })
-
-//https://www.macrotrends.net/stocks/charts/UNH/unitedhealth-group/financial-statements
-//https://www.macrotrends.net/stocks/charts/UNH/unitedhealth-group/cash-flow-statement
