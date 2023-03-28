@@ -4,6 +4,7 @@
   </head>
   <body>
     <h1>Stock Guide</h1>
+    <p>Click one of the stocks to get the financial data. This process could take some seconds (10-14 secs.) so hold on. </p>
     <ul>
       <% stockSymbols.forEach(function(symbol) { %>
         <li><a href="/api/v1/stocks/<%= symbol %>"><%= symbol %></a></li>

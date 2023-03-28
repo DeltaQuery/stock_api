@@ -77,7 +77,7 @@ const createApp = () => {
     //require('./utils/auth')
 
     app.get('/', (req, res) => {
-        res.send('Ve a /api/v1/guide para una lista de las compañías cuya información está disponible. Las solicitudes están basadas en scrapping y tomarán algunos segundos (10-12 segs).')
+        res.redirect('/api/v1/guide')
     })
 
     routerApi(app)
